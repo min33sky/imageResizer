@@ -4,7 +4,7 @@ interface Props {
   originalWidth: number;
   originalHeight: number;
   originalRatio: number;
-  onChangeSize: (width: number, height: number) => void;
+  onChangeSize: (width: number, height: number, quality: number) => void;
 }
 
 export default function ResizeController({
@@ -25,11 +25,23 @@ export default function ResizeController({
   const handleSize = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === 'width') {
-      setWidth(Number(value));
+      if (isRatioFixed) {
+        setWidth(Number(value) || 1);
+        setHeight(Math.floor(Number(value) / ratio));
+      } else {
+        setWidth(Number(value) || 1);
+      }
     } else if (name === 'height') {
-      setHeight(Number(value));
+      if (isRatioFixed) {
+        setHeight(Number(value) || 1);
+        setWidth(Math.floor(Number(value) * ratio));
+      } else {
+        setHeight(Number(value) || 1);
+      }
     }
   };
+
+  console.log('width', width);
 
   const handleClickRatioFixed = () => {
     setIsRatioFixed(!isRatioFixed);
@@ -42,13 +54,18 @@ export default function ResizeController({
     setQuality(Number(e.target.value));
   };
 
-  console.log(width, height, isRatioFixed, quality);
-
+  /**
+   * 이미지가 변경되면 이미지의 사이즈를 재조정
+   */
   useEffect(() => {
     setWidth(originalWidth);
     setHeight(originalHeight);
     setRatio(originalRatio);
   }, [originalWidth, originalHeight, originalRatio]);
+
+  useEffect(() => {
+    onChangeSize(width, height, quality);
+  }, [width, height, quality]);
 
   return (
     <div>
@@ -62,6 +79,7 @@ export default function ResizeController({
             id="width"
             name="width"
             value={width}
+            min="1"
             onChange={handleSize}
             className="w-full rounded-md border border-slate-300 p-2 outline-none"
           />
@@ -76,6 +94,7 @@ export default function ResizeController({
             id="height"
             name="height"
             value={height}
+            min="1"
             onChange={handleSize}
             className="w-full rounded-md border border-slate-300 p-2 outline-none"
           />

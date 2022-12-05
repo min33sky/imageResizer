@@ -14,11 +14,10 @@ export default function App() {
     setImageWidth(width);
     setImageHeight(height);
     setImageRatio(width / height);
-    console.log('원본 사이즈: ', width, height, width / height);
   }, []);
 
-  const handleResize = (width: number, height: number) => {
-    console.log('리사이즈 사이즈: ', width, height, width / height);
+  const handleResize = (width: number, height: number, quality: number) => {
+    console.log('리사이즈 사이즈: ', width, height, quality);
   };
 
   return (
