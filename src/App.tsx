@@ -59,10 +59,10 @@ export default function App() {
   }, [imageUrl]);
 
   return (
-    <main className="flex h-screen justify-center bg-gradient-to-tr from-slate-800 to-slate-600">
+    <main className="flex min-h-screen justify-center overflow-hidden bg-gradient-to-tr from-slate-800 to-slate-600">
       <div
-        className={`mt-20 flex h-[430px] w-10/12 max-w-2xl flex-col space-y-6 rounded-lg bg-slate-100 px-5 py-10 shadow-lg transition-all duration-500  ${
-          imageUrl && 'h-[760px]'
+        className={`mt-10 flex h-[290px] w-10/12 max-w-xl flex-col space-y-2 overflow-hidden rounded-lg bg-slate-100 px-4 pt-2 shadow-lg transition-all  duration-500 sm:mt-14 sm:h-[380px]  ${
+          imageUrl && 'h-[600px] sm:h-[570px]'
         }`}
       >
         <h1 className="text-center text-2xl font-bold">Image Resizer</h1>
