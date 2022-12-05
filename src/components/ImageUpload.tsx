@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { PhotoIcon } from '@heroicons/react/24/outline';
 
 interface Props {
-  getImageSize: (width: number, height: number) => void;
+  getImageSize: (width: number, height: number, imageUrl: string) => void;
 }
 
 /**
@@ -70,6 +70,7 @@ export default function ImageUpload({ getImageSize }: Props) {
         getImageSize(
           imageRef.current?.naturalWidth || 0,
           imageRef.current?.naturalHeight || 0,
+          imageUrl || '',
         );
       };
     }

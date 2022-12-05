@@ -16,7 +16,7 @@ export default function ResizeController({
   const [width, setWidth] = useState(originalWidth);
   const [height, setHeight] = useState(originalHeight);
   const [isRatioFixed, setIsRatioFixed] = useState(true);
-  const [quality, setQuality] = useState(50);
+  const [quality, setQuality] = useState(75);
   const [ratio, setRatio] = useState(originalRatio);
 
   /**
@@ -41,8 +41,9 @@ export default function ResizeController({
     }
   };
 
-  console.log('width', width);
-
+  /**
+   * 이미지 비율을 고정 여부를 설정하는 핸들러
+   */
   const handleClickRatioFixed = () => {
     setIsRatioFixed(!isRatioFixed);
   };
@@ -63,6 +64,9 @@ export default function ResizeController({
     setRatio(originalRatio);
   }, [originalWidth, originalHeight, originalRatio]);
 
+  /**
+   * 이미지 사이즈가 변경되면 부모 컴포넌트에게 변경된 이미지 사이즈를 전달
+   */
   useEffect(() => {
     onChangeSize(width, height, quality);
   }, [width, height, quality]);
