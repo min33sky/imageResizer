@@ -44,12 +44,13 @@ export default function App() {
     canvas.width = imageWidth;
     canvas.height = imageHeight;
 
+    //? 이미지를 캔버스에 그리기
     const image = new Image();
     image.src = imageUrl;
     image.onload = () => {
       ctx?.drawImage(image, 0, 0, imageWidth, imageHeight);
       aTag.href = canvas.toDataURL('image/jpeg', imgQuality);
-      aTag.download = new Date().getTime().toString();
+      aTag.download = `Resize_${new Date().getTime().toString()}`;
       aTag.click();
     };
   }, [imageUrl]);
