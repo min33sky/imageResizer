@@ -1,13 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { PhotoIcon } from '@heroicons/react/24/outline';
 
+interface Props {
+  getImageSize: (width: number, height: number) => void;
+}
+
 /**
  * 이미지 업로드 컴포넌트
  */
-export default function ImageUpload() {
-  const [image, setImage] = useState<string | null>(null);
+export default function ImageUpload({ getImageSize }: Props) {
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const labelRef = useRef<HTMLLabelElement>(null); //? Drag & Drop의 Style 변경을 위한 Ref
+  const imageRef = useRef<HTMLImageElement>(null); //? 이미지의 너비, 높이를 가져오기 위한 Ref
 
   /**
    * 이미지 업로드 핸들러
@@ -17,7 +22,7 @@ export default function ImageUpload() {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       const previewImage = URL.createObjectURL(file);
-      setImage(previewImage);
+      setImageUrl(previewImage);
     }
   };
 
@@ -44,7 +49,8 @@ export default function ImageUpload() {
     ) {
       const file = e.dataTransfer.files[0];
       const previewImage = URL.createObjectURL(file);
-      setImage(previewImage);
+      setImageUrl(previewImage);
+
       labelRef.current?.classList.remove('border-sky-600');
       labelRef.current?.classList.remove('bg-sky-100');
     }
@@ -53,9 +59,21 @@ export default function ImageUpload() {
   //? 메모리 누수 방지를 위해 URL.revokeObjectURL()을 사용
   useEffect(() => {
     return () => {
-      if (image) URL.revokeObjectURL(image);
+      if (imageUrl) URL.revokeObjectURL(imageUrl);
     };
-  }, [image]);
+  }, [imageUrl]);
+
+  //? 이미지 원본 크기를 가져온다.
+  useEffect(() => {
+    if (imageRef.current) {
+      imageRef.current.onload = () => {
+        getImageSize(
+          imageRef.current?.naturalWidth || 0,
+          imageRef.current?.naturalHeight || 0,
+        );
+      };
+    }
+  }, [imageUrl]);
 
   return (
     <div>
@@ -70,9 +88,10 @@ export default function ImageUpload() {
         onDragLeave={handleDragEnd}
         onDrop={handleImageDrop}
       >
-        {image ? (
+        {imageUrl ? (
           <img
-            src={image}
+            ref={imageRef}
+            src={imageUrl}
             className="h-full w-full object-contain"
             alt="upload image"
           />

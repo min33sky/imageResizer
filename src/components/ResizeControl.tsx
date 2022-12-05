@@ -5,6 +5,7 @@ export default function ResizeControl() {
   const [height, setHeight] = useState(0);
   const [isRatioFixed, setIsRatioFixed] = useState(true);
   const [quality, setQuality] = useState(50);
+  const [ratio, setRatio] = useState(0);
 
   /**
    * 이미지 너비, 높이를 변경하는 핸들러
@@ -42,6 +43,7 @@ export default function ResizeControl() {
             type="number"
             id="width"
             name="width"
+            value={width}
             onChange={handleSize}
             className="w-full rounded-md border border-slate-300 p-2 outline-none"
           />
@@ -55,6 +57,7 @@ export default function ResizeControl() {
             type="number"
             id="height"
             name="height"
+            value={height}
             onChange={handleSize}
             className="w-full rounded-md border border-slate-300 p-2 outline-none"
           />
