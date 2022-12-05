@@ -63,7 +63,7 @@ export default function ImageUpload({ getImageSize }: Props) {
     };
   }, [imageUrl]);
 
-  //? 이미지 원본 크기를 가져온다.
+  //? 이미지 원본 크기를 가져온다. (이미지 객체를 사용해서 가져와도 될 것 같다.)
   useEffect(() => {
     if (imageRef.current) {
       imageRef.current.onload = () => {
@@ -104,8 +104,10 @@ export default function ImageUpload({ getImageSize }: Props) {
               </p>
             ) : (
               <>
-                <PhotoIcon className="h-8 w-8" />
-                <p className="text-lg font-semibold">Upload Image</p>
+                <PhotoIcon className="h-10 w-10" />
+                <p className="mt-2 text-lg font-semibold">
+                  클릭하거나 이미지를 드래그하여 업로드하세요.
+                </p>
               </>
             )}
           </>

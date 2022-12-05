@@ -34,6 +34,9 @@ export default function App() {
     [],
   );
 
+  /**
+   * 이미지 다운로드 핸들러
+   */
   const handleDownload = useCallback(() => {
     const canvas = document.createElement('canvas');
     const aTag = document.createElement('a');
@@ -62,7 +65,8 @@ export default function App() {
           imageUrl && 'h-[760px]'
         }`}
       >
-        <h1 className="text-center text-2xl font-bold">이미지 리사이저</h1>
+        <h1 className="text-center text-2xl font-bold">Image Resizer</h1>
+
         {/* 이미지 업로드 컴포넌트 */}
         <ImageUpload getImageSize={getImageOriginalSize} />
 
