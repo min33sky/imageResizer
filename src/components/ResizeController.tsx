@@ -1,11 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-export default function ResizeControl() {
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
+interface Props {
+  originalWidth: number;
+  originalHeight: number;
+  originalRatio: number;
+  onChangeSize: (width: number, height: number) => void;
+}
+
+export default function ResizeController({
+  originalWidth,
+  originalHeight,
+  originalRatio,
+  onChangeSize,
+}: Props) {
+  const [width, setWidth] = useState(originalWidth);
+  const [height, setHeight] = useState(originalHeight);
   const [isRatioFixed, setIsRatioFixed] = useState(true);
   const [quality, setQuality] = useState(50);
-  const [ratio, setRatio] = useState(0);
+  const [ratio, setRatio] = useState(originalRatio);
 
   /**
    * 이미지 너비, 높이를 변경하는 핸들러
@@ -31,6 +43,12 @@ export default function ResizeControl() {
   };
 
   console.log(width, height, isRatioFixed, quality);
+
+  useEffect(() => {
+    setWidth(originalWidth);
+    setHeight(originalHeight);
+    setRatio(originalRatio);
+  }, [originalWidth, originalHeight, originalRatio]);
 
   return (
     <div>
