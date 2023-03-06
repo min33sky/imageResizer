@@ -8,7 +8,7 @@ interface Props {
 /**
  * 이미지 업로드 컴포넌트
  */
-export default function ImageUpload({ getImageSize }: Props) {
+export default function ImageUploadZone({ getImageSize }: Props) {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const labelRef = useRef<HTMLLabelElement>(null); //? Drag & Drop의 Style 변경을 위한 Ref
@@ -23,6 +23,7 @@ export default function ImageUpload({ getImageSize }: Props) {
       const file = e.target.files[0];
       const previewImage = URL.createObjectURL(file);
       setImageUrl(previewImage);
+      e.target.value = ''; //? 이미지를 업로드하면 input의 value를 초기화한다. (같은 이미지를 다시 업로드 할 수 있도록)
     }
   };
 
@@ -105,8 +106,8 @@ export default function ImageUpload({ getImageSize }: Props) {
             ) : (
               <>
                 <PhotoIcon className="h-10 w-10" />
-                <p className="mt-2 text-lg font-semibold">
-                  클릭하거나 이미지를 드래그하여 업로드하세요.
+                <p className="mt-2 text-sm sm:text-lg">
+                  클릭하거나 드래그하여 이미지를 업로드하세요.
                 </p>
               </>
             )}

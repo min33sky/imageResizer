@@ -7,6 +7,9 @@ interface Props {
   onChangeSize: (width: number, height: number, quality: number) => void;
 }
 
+/**
+ * 이미지 리사이즈 컨트롤러
+ */
 export default function ResizeController({
   originalWidth,
   originalHeight,
