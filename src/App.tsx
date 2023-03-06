@@ -56,7 +56,7 @@ export default function App() {
       aTag.download = `Resize_${new Date().getTime().toString()}`;
       aTag.click();
     };
-  }, [imageUrl]);
+  }, [imageUrl, imageWidth, imageHeight]);
 
   return (
     <main className="flex min-h-screen justify-center overflow-hidden bg-gradient-to-tr from-slate-800 to-slate-600">
